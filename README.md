@@ -1,6 +1,6 @@
 # Earthquake Pipeline
 
-This project fetches earthquake data for Turkey on a recurring basis, produces raw and cleaned data layers, runs SQL queries, and provides a Streamlit dashboard for visualization.
+This project fetches earthquake data for Türkiye on a recurring basis, produces raw and cleaned data layers, runs SQL queries, and provides a Streamlit dashboard for visualization.
 
 ## Quick start
 
