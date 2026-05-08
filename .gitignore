@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+.env/
+
+# Data and DB
+data/
+db/
+*.db
+*.sqlite3
+
+# IDE/editor
+.vscode/
+.DS_Store
+
+# Packaging
+pip-wheel-metadata/
+pip-log.txt
