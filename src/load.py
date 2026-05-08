@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from pathlib import Path
 
@@ -43,9 +44,35 @@ def write_to_sqlite(df: pd.DataFrame) -> None:
     print(f"Loaded {len(df)} rows into SQLite database: {DB_FILE}")
 
 
+def get_postgres_engine():
+    try:
+        from sqlalchemy import create_engine
+    except Exception as e:
+        raise RuntimeError(f"SQLAlchemy is required for Postgres support: {e}")
+
+    user = os.getenv("POSTGRES_USER", "postgres")
+    password = os.getenv("POSTGRES_PASSWORD", "")
+    host = os.getenv("POSTGRES_HOST", "localhost")
+    port = os.getenv("POSTGRES_PORT", "5432")
+    db = os.getenv("POSTGRES_DB", "earthquakes")
+    return create_engine(f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db}")
+
+
+def write_to_postgres(df: pd.DataFrame) -> None:
+    engine = get_postgres_engine()
+    # Use SQLAlchemy engine and pandas to_sql. Requires psycopg2 and sqlalchemy in requirements.
+    with engine.begin() as conn:
+        df.to_sql(TABLE_NAME, conn, if_exists="replace", index=False, method="multi", chunksize=1000)
+    print(f"Loaded {len(df)} rows into Postgres database: {engine.url}")
+
+
 def main() -> None:
     df = load_cleaned_data()
-    write_to_sqlite(df)
+    use_postgres = os.getenv("USE_POSTGRES", "0").lower() in ("1", "true", "yes")
+    if use_postgres:
+        write_to_postgres(df)
+    else:
+        write_to_sqlite(df)
 
 
 if __name__ == "__main__":

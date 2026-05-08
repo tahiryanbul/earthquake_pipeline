@@ -47,6 +47,22 @@ python src/transform.py
 python src/load.py
 ```
 
+### Optional: Load into PostgreSQL
+
+`src/load.py` can write to a PostgreSQL database instead of SQLite. To enable Postgres writing set `USE_POSTGRES=1` and provide connection details via environment variables. Example:
+
+```bash
+export POSTGRES_USER=youruser
+export POSTGRES_PASSWORD=yourpass
+export POSTGRES_HOST=localhost
+export POSTGRES_PORT=5432
+export POSTGRES_DB=earthquakes
+export USE_POSTGRES=1
+python src/load.py
+```
+
+You can also place these variables in a `.env` file and load them with `python-dotenv` (package added to `requirements.txt`).
+
 5. Run the dashboard
 
 ```bash

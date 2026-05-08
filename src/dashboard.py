@@ -14,8 +14,8 @@ def load_data() -> pd.DataFrame:
 
 
 def main() -> None:
-    st.set_page_config(page_title="Türkiye Deprem Dashboard", layout="wide")
-    st.title("Türkiye Deprem Verisi Pipeline")
+    st.set_page_config(page_title="Türkiye Earthquake Dashboard", layout="wide")
+    st.title("Türkiye Earthquake Data Pipeline")
 
     df = load_data()
     st.write("### Temizlenmiş Deprem Verisi")
