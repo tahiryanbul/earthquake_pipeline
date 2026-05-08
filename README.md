@@ -1,10 +1,10 @@
 # Earthquake Pipeline
 
-Bu proje, Türkiye deprem verilerini periyodik olarak çekmek, ham ve temizlenmiş veri katmanları oluşturmak, SQL sorguları çalıştırmak ve Streamlit dashboard ile görselleştirmek için hazırlanmıştır.
+This project fetches earthquake data for Turkey on a recurring basis, produces raw and cleaned data layers, runs SQL queries, and provides a Streamlit dashboard for visualization.
 
 ## Quick start
 
-1. Yeni bir sanal ortam oluşturun ve bağımlılıkları yükleyin:
+1. Create a virtual environment and install dependencies:
 
 ```bash
 cd /path/to/earthquake_pipeline
@@ -13,59 +13,59 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-2. Dashboard'ı başlatın:
+2. Start the dashboard:
 
 ```bash
 streamlit run src/dashboard.py
 ```
 
-Not: Projeyi klonladıktan sonra `.venv` klasörünü repoya eklemeyin; proje kökünde `.gitignore` dosyası halihazırda bu klasörü hariç tutar.
+Note: Do not add `.venv` to the repository. The repository already includes a `.gitignore` entry to exclude it.
 
-## Adımlar
+## Steps
 
-1. Ortamı hazırla
+1. Prepare environment
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-2. Ham veriyi çek
+2. Fetch raw data
 
 ```bash
 python src/fetch_data.py
 ```
 
-3. Veriyi temizle
+3. Clean and normalize data
 
 ```bash
 python src/transform.py
 ```
 
-4. Temiz veriyi SQLite veritabanına yükle
+4. Load cleaned data into SQLite
 
 ```bash
 python src/load.py
 ```
 
-5. Dashboard çalıştır
+5. Run the dashboard
 
 ```bash
 streamlit run src/dashboard.py
 ```
 
-## Dosya Açıklamaları
+## File overview
 
-- `src/fetch_data.py`: Ham deprem verisini API'den çeker ve `data/raw/` altında kaydeder.
-- `src/transform.py`: Ham JSON verisini okur, normalize eder ve `data/cleaned/` altına temizlenmiş CSV kaydeder.
-- `src/load.py`: Temizlenmiş CSV'yi SQLite veritabanına yükler.
-- `src/queries.sql`: Sorgulama için hazır SQL örnekleri içerir.
-- `src/dashboard.py`: Streamlit ile temel görselleştirme sağlar.
+- `src/fetch_data.py`: Downloads raw earthquake data from an API into `data/raw/`.
+- `src/transform.py`: Reads raw JSON, normalizes records, and writes a cleaned CSV to `data/cleaned/`.
+- `src/load.py`: Loads the cleaned CSV into an SQLite database.
+- `src/queries.sql`: Example SQL queries for analysis.
+- `src/dashboard.py`: Streamlit dashboard for visualizing the data.
 
-## Notlar
+## Notes
 
-- `data/raw/` klasörüne her `fetch_data.py` çağrısında yeni bir JSON dosyası eklenir.
-- `fetch_data.py` içindeki `DATA_SOURCE_URL` alanını kendi veri kaynağına göre güncelleyebilirsiniz.
-- `db/earthquakes.db` veritabanını `src/load.py` oluşturur.
+- Each run of `fetch_data.py` will add a JSON file to `data/raw/`.
+- Update `DATA_SOURCE_URL` in `src/fetch_data.py` if you want to point to a different API source.
+- The SQLite database `db/earthquakes.db` is created by `src/load.py`.
 
 ## Compatibility & reproducibility
 
